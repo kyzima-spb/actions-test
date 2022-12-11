@@ -8,11 +8,12 @@ on:
       - .github/workflows/checker.yml
       - scripts/main.js
 
+env:
+  VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|')(.+)\2
+
 jobs:
   setup:
     runs-on: ubuntu-latest
-    env:
-      VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|')(.+)\2
     outputs:
       ok: ${{ steps.lastver.outputs.value > steps.curver.outputs.value }}
     steps:
