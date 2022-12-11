@@ -20,9 +20,9 @@ jobs:
       -
         name: Get current version
         id: curver
-        run: |
-          sed -nr "s/${{ env.VERSION_PATTERN }}/value=\3/p" \
-              Dockerfile \
+        run: >
+          sed -nr "s/${{ env.VERSION_PATTERN }}/value=\3/p"
+              Dockerfile
               >> $GITHUB_OUTPUT
       -
         name: Get latest version
@@ -40,15 +40,15 @@ jobs:
       -
         name: Set update state
         id: update
-        run: |
-          echo "state=${{ steps.lastver.outputs.value > steps.curver.outputs.value }}" \
+        run: >
+          echo "state=${{ steps.lastver.outputs.value > steps.curver.outputs.value }}"
           >> $GITHUB_OUTPUT
       -
         name: Update version in Dockerfile
         if: ${{ steps.update.outputs.state }}
-        run: |
-          sed -ri \
-              "s/${{ env.VERSION_PATTERN }}/\1=\2${{ steps.lastver.outputs.value }}\2/" \
+        run: >
+          sed -ri
+              "s/${{ env.VERSION_PATTERN }}/\1=\2${{ steps.lastver.outputs.value }}\2/"
               Dockerfile
       -
         name: Create Pull Request
