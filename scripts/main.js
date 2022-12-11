@@ -19,7 +19,6 @@ async function getLatestVersion(api, owner, repo) {
 module.exports = async ({ github, core }) => {
   const latest = await getLatestVersion(github.rest, 'just-containers', 's6-overlay')
   const version = latest.tag_name.replace('v', '')
-  console.log(latest)
   core.setOutput('value', version)
   core.setOutput('body', latest.body)
 }
