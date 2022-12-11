@@ -46,7 +46,7 @@ jobs:
       - run: echo ${{ steps.update.outputs.state }}
       -
         name: Update version in Dockerfile
-        if: ${{ steps.update.outputs.state }}
+        if: ${{ fromJSON(steps.update.outputs.state) }}
         run:
           sed -ri
             "s/${{ env.VERSION_PATTERN }}/\1=\2${{ steps.lastver.outputs.value }}\2/"
@@ -54,7 +54,7 @@ jobs:
       -
         name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
-        if: ${{ steps.update.outputs.state }}
+        if: ${{ fromJSON(steps.update.outputs.state) }}
         env:
           MESSAGE: >
             Bump s6-overlay
