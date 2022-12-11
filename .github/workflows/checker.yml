@@ -55,7 +55,7 @@ jobs:
         uses: peter-evans/create-pull-request@v4
         if: ${{ steps.update.outputs.state }}
         env:
-          MESSAGE: |
+          MESSAGE: >
             Bump s6-overlay
             from ${{ steps.curver.outputs.value }}
             to ${{ steps.lastver.outputs.value }}
