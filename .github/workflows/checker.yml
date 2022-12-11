@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|')(.+)\2
+    outputs:
+      ok: ${{ steps.lastver.outputs.value > steps.curver.outputs.value }}
     steps:
     -
       name: Git checkout
@@ -34,7 +36,7 @@ jobs:
           await script({github, core})
   createPullRequest:
     needs: setup
-    if: ${{ steps.lastver.outputs.value > steps.curver.outputs.value }}
+    if: ${{ needs.setup.outputs.ok }}
     steps:
     -
       name: Update version in Dockerfile
