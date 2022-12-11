@@ -17,7 +17,9 @@ jobs:
     outputs:
       ok: ${{ steps.lastver.outputs.value > steps.curver.outputs.value }}
     steps:
-      - uses: actions/checkout@v3
+      -
+        name: Checkout
+        uses: actions/checkout@v3
       -
         name: Get current version
         id: curver
@@ -33,6 +35,14 @@ jobs:
           script: |
             const script = require('./scripts/main.js')
             await script({github, core})
+      -
+        name: Setup
+        id: has_update
+        run: |
+          echo "state=${{ steps.lastver.outputs.value > steps.curver.outputs.value }}" \
+          >> $GITHUB_OUTPUT
+      -
+        run: echo ${{ steps.has_update.outputs.state }}
   createPullRequest:
     needs: setup
     if: ${{ needs.setup.outputs.ok }}
