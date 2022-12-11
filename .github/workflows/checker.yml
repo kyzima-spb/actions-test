@@ -12,22 +12,25 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     env:
-      PATTERN: ARG\s+S6_OVERLAY_VERSION=\"(.+)\"
+      VERSION_PATTERN: ARG\s+S6_OVERLAY_VERSION=\"(.+)\"
     steps:
     -
       name: Git checkout
       uses: actions/checkout@v3
     -
       name: Get current version
-      id: current
-      run: sed -nr "s/${{ env.PATTERN }}/version=\1/p" Dockerfile >> $GITHUB_OUTPUT
-    - run: echo ${{ steps.current.outputs.version }}
-    # -
-    #   id: checker
-    #   uses: actions/github-script@v6
-    #   with:
-    #     script: |
-    #       const script = require('./scripts/main.js')
-    #       await script({github, core})
-    # -
-    #   run: echo ${{ steps.checker.outputs.version }}
+      id: curver
+      run: |
+        sed -nr "s/${{ env.VERSION_PATTERN }}/value=\1/p" \
+            Dockerfile \
+            >> $GITHUB_OUTPUT
+    -
+      name: Get latest version
+      id: lastver
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const script = require('./scripts/main.js')
+          await script({github, core})
+    - run: echo ${{ steps.curver.outputs.value }}
+    - run: echo ${{ steps.lastver.outputs.value }}
