@@ -37,6 +37,7 @@ jobs:
   createPullRequest:
     needs: setup
     if: ${{ needs.setup.outputs.ok }}
+    runs-on: ubuntu-latest
     steps:
     -
       name: Update version in Dockerfile
