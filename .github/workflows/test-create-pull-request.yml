@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - run: echo ${{ github }}
       # - name: Create commits
       #   run: |
       #     git config user.name 'Kirill Vercetti'
@@ -21,7 +20,7 @@ jobs:
       #     date +%s > new-report.txt
       #     git add new-report.txt
       #     git commit -m "Add untracked file during workflow"
-      # - name: Uncommitted change
-      #   run: mv report.txt report.txt.back
-      # - name: Create Pull Request
-      #   uses: peter-evans/create-pull-request@v4
+      - name: Uncommitted change
+        run: date +%s > report.txt
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
