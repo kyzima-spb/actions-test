@@ -54,4 +54,6 @@ jobs:
         commit-message: ${{ env.MESSAGE }}
         labels: |
           automated pr
-        body: ${{ steps.lastver.outputs.body }}
+        body: |
+          ${{ steps.lastver.outputs.body }}
+          ${{ steps.lastver.outputs.url }}
