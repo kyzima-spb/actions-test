@@ -1,8 +1,8 @@
 name: Check and build new s6 version
 
 on:
-  # schedule:
-  #   - cron: '*/5 * * * *'
+  schedule:
+    - cron: '0 * * * *'
   push:
     paths:
       - .github/workflows/checker.yml
@@ -43,7 +43,6 @@ jobs:
         run:
           echo "state=${{ steps.lastver.outputs.value > steps.curver.outputs.value }}"
             >> $GITHUB_OUTPUT
-      - run: echo ${{ steps.update.outputs.state }}
       -
         name: Update version in Dockerfile
         if: ${{ fromJSON(steps.update.outputs.state) }}
