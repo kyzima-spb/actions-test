@@ -16,50 +16,49 @@ jobs:
     outputs:
       ok: ${{ steps.lastver.outputs.value > steps.curver.outputs.value }}
     steps:
-    -
-      name: Git checkout
-      uses: actions/checkout@v3
-    -
-      name: Get current version
-      id: curver
-      run: |
-        sed -nr "s/${{ env.VERSION_PATTERN }}/value=\3/p" \
-            Dockerfile \
-            >> $GITHUB_OUTPUT
-    -
-      name: Get latest version
-      id: lastver
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const script = require('./scripts/main.js')
-          await script({github, core})
+      - uses: actions/checkout@v3
+      -
+        name: Get current version
+        id: curver
+        run: |
+          sed -nr "s/${{ env.VERSION_PATTERN }}/value=\3/p" \
+              Dockerfile \
+              >> $GITHUB_OUTPUT
+      -
+        name: Get latest version
+        id: lastver
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const script = require('./scripts/main.js')
+            await script({github, core})
   createPullRequest:
     needs: setup
     if: ${{ needs.setup.outputs.ok }}
     runs-on: ubuntu-latest
     steps:
-    -
-      name: Update version in Dockerfile
-      run: |
-        sed -ri \
-            "s/${{ env.VERSION_PATTERN }}/\1=\2${{ steps.lastver.outputs.value }}\2/" \
-            Dockerfile
-    -
-      name: Create Pull Request
-      uses: peter-evans/create-pull-request@v4
-      env:
-        MESSAGE: |
-          Bump s6-overlay
-          from ${{ steps.curver.outputs.value }}
-          to ${{ steps.lastver.outputs.value }}
-      with:
-        branch: checker/latest-version
-        delete-branch: true
-        title: ${{ env.MESSAGE }}
-        commit-message: ${{ env.MESSAGE }}
-        labels: |
-          automated pr
-        body: |
-          ${{ steps.lastver.outputs.body }}
-          ${{ steps.lastver.outputs.url }}
+      - uses: actions/checkout@v3
+      -
+        name: Update version in Dockerfile
+        run: |
+          sed -ri \
+              "s/${{ env.VERSION_PATTERN }}/\1=\2${{ steps.lastver.outputs.value }}\2/" \
+              Dockerfile
+      -
+        name: Create Pull Request
+        uses: peter-evans/create-pull-request@v4
+        env:
+          MESSAGE: |
+            Bump s6-overlay
+            from ${{ steps.curver.outputs.value }}
+            to ${{ steps.lastver.outputs.value }}
+        with:
+          branch: checker/latest-version
+          delete-branch: true
+          title: ${{ env.MESSAGE }}
+          commit-message: ${{ env.MESSAGE }}
+          labels: |
+            automated pr
+          body: |
+            ${{ steps.lastver.outputs.body }}
+            ${{ steps.lastver.outputs.url }}
