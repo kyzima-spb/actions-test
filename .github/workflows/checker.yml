@@ -13,7 +13,7 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     env:
-      VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|')?(.+)\2
+      VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|\')?(.+)\2
     steps:
     -
       name: Git checkout
