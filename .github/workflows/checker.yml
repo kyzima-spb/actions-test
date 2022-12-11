@@ -13,7 +13,7 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     env:
-      VERSION_PATTERN: ARG\s+S6_OVERLAY_VERSION=\"(.+)\"
+      VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|')?(.+)\2
     steps:
     -
       name: Git checkout
@@ -22,7 +22,7 @@ jobs:
       name: Get current version
       id: curver
       run: |
-        sed -nr "s/${{ env.VERSION_PATTERN }}/value=\1/p" \
+        sed -nr 's/${{ env.VERSION_PATTERN }}/value=\3/p' \
             Dockerfile \
             >> $GITHUB_OUTPUT
     -
@@ -37,7 +37,7 @@ jobs:
       name: Update version in Dockerfile
       run: |
         sed -ri \
-            "s/${{ env.VERSION_PATTERN }}/${{ steps.lastver.outputs.value }}/" \
+            's/${{ env.VERSION_PATTERN }}/\1="${{ steps.lastver.outputs.value }}"/' \
             Dockerfile
     - run: cat Dockerfile
     - run: echo "${{ steps.curver.outputs.value }}"
