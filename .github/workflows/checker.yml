@@ -12,7 +12,7 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     env:
-      PATTERN: ARG\s+S6_OVERLAY_VERSION="(.+)"
+      PATTERN: ARG\s+S6_OVERLAY_VERSION=\"(.+)\"
     steps:
     -
       name: Git checkout
