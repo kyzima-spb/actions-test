@@ -43,6 +43,7 @@ jobs:
         run:
           echo "state=${{ steps.lastver.outputs.value > steps.curver.outputs.value }}"
             >> $GITHUB_OUTPUT
+      - run: echo ${{ steps.update.outputs.state }}
       -
         name: Update version in Dockerfile
         if: ${{ steps.update.outputs.state }}
