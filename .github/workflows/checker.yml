@@ -33,6 +33,13 @@ jobs:
         script: |
           const script = require('./scripts/main.js')
           await script({github, core})
+    -
+      name: Update version in Dockerfile
+      run: |
+        sed -ri \
+            "s/${{ env.VERSION_PATTERN }}/${{ steps.lastver.outputs.value }}/" \
+            Dockerfile
+    - run: cat Dockerfile
     - run: echo "${{ steps.curver.outputs.value }}"
     - run: echo "${{ steps.lastver.outputs.value }}"
     - run: echo "${{ steps.lastver.outputs.body }}"
