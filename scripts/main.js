@@ -4,19 +4,15 @@ async function getLatestVersion(api, owner, repo) {
   
   data.sort((a, b) => {
     if (a.tag_name < b.tag_name) {
-      return -1
+      return 1
     }
     if (a.tag_name > b.tag_name) {
-      return 1
+      return -1
     }
     return 0
   })
   
   return data[data.length - 1]
-  
-  // const versions = resp.data.map(r => r.name)
-  // versions.sort()
-  // return versions[versions.length - 1]
 }
 
 
