@@ -11,17 +11,23 @@ jobs:
   job1:
     name: Debug
     runs-on: ubuntu-latest
-
+    env:
+      PATTERN: ARG\s+S6_OVERLAY_VERSION="(.+)"
     steps:
     -
       name: Git checkout
       uses: actions/checkout@v3
     -
-      id: checker
-      uses: actions/github-script@v6
-      with:
-        script: |
-          const script = require('./scripts/main.js')
-          await script({github, core})
-    -
-      run: echo ${{ steps.checker.outputs.version }}
+      name: Get current version
+      id: current
+      run: sed "s/${{ env.IMAGE_NAME }}/version=\1/p" Dockerfile >> $GITHUB_OUTPUT
+    - run: echo ${{ steps.current.outputs.version }}
+    # -
+    #   id: checker
+    #   uses: actions/github-script@v6
+    #   with:
+    #     script: |
+    #       const script = require('./scripts/main.js')
+    #       await script({github, core})
+    # -
+    #   run: echo ${{ steps.checker.outputs.version }}
