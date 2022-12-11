@@ -20,5 +20,5 @@ module.exports = async ({ github, core }) => {
   const latest = await getLatestVersion(github.rest, 'just-containers', 's6-overlay')
   core.setOutput('value', latest.tag_name.replace('v', ''))
   core.setOutput('body', latest.body)
-  core.setOutput('url', latest.url)
+  core.setOutput('url', latest.html_url)
 }
