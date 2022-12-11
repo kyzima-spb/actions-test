@@ -21,6 +21,7 @@ jobs:
           git add new-report.txt
           git commit -m "Add untracked file during workflow"
       - name: Uncommitted change
-        run: date +%s > report.txt
+        run: mv report.txt report.txt.back
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v4
+
