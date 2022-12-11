@@ -13,7 +13,7 @@ jobs:
     name: Debug
     runs-on: ubuntu-latest
     env:
-      VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|\')?(.+)\2
+      VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|')(.+)\2
     steps:
     -
       name: Git checkout
@@ -37,14 +37,14 @@ jobs:
       name: Update version in Dockerfile
       run: |
         sed -ri \
-            "s/${{ env.VERSION_PATTERN }}/\1='${{ steps.lastver.outputs.value }}'/" \
+            "s/${{ env.VERSION_PATTERN }}/\1=\2${{ steps.lastver.outputs.value }}\2/" \
             Dockerfile
     -
       name: Create Pull Request
       uses: peter-evans/create-pull-request@v4
       env:
         MESSAGE: |
-          Bump version s6-overlay version
+          Bump s6-overlay
           from ${{ steps.curver.outputs.value }}
           to ${{ steps.lastver.outputs.value }}
       with:
