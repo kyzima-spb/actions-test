@@ -20,7 +20,7 @@ jobs:
     -
       name: Get current version
       id: current
-      run: sed "s/${{ env.IMAGE_NAME }}/version=\1/p" Dockerfile >> $GITHUB_OUTPUT
+      run: sed -nr "s/${{ env.IMAGE_NAME }}/version=\1/p" Dockerfile >> $GITHUB_OUTPUT
     - run: echo ${{ steps.current.outputs.version }}
     # -
     #   id: checker
