@@ -22,7 +22,7 @@ jobs:
       name: Get current version
       id: curver
       run: |
-        sed -nr 's/${{ env.VERSION_PATTERN }}/value=\3/p' \
+        sed -nr "s/${{ env.VERSION_PATTERN }}/value=\3/p" \
             Dockerfile \
             >> $GITHUB_OUTPUT
     -
