@@ -6,6 +6,7 @@ on:
   push:
     paths:
       - .github/workflows/checker.yml
+      - scripts/main.js
 
 jobs:
   job1:
