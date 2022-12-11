@@ -33,6 +33,6 @@ jobs:
         script: |
           const script = require('./scripts/main.js')
           await script({github, core})
-    - run: echo ${{ steps.curver.outputs.value }}
-    - run: echo ${{ steps.lastver.outputs.value }}
-    - run: echo ${{ steps.lastver.outputs.body }}
+    - run: echo "${{ steps.curver.outputs.value }}"
+    - run: echo "${{ steps.lastver.outputs.value }}"
+    - run: echo "${{ steps.lastver.outputs.body }}"
