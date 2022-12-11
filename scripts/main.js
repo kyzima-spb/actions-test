@@ -12,12 +12,14 @@ async function getLatestVersion(api, owner, repo) {
     return 0
   })
   
-  return data[data.length - 1]
+  return data[0]
 }
 
 
 module.exports = async ({ github, core }) => {
   const latest = await getLatestVersion(github.rest, 'just-containers', 's6-overlay')
+  const version = latest.tag_name.replace('v', '')
   console.log(latest)
-  core.setOutput('value', latest.tag_name)
+  core.setOutput('value', version)
+  core.setOutput('body', latest.body)
 }

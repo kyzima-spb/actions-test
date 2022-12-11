@@ -35,3 +35,4 @@ jobs:
           await script({github, core})
     - run: echo ${{ steps.curver.outputs.value }}
     - run: echo ${{ steps.lastver.outputs.value }}
+    - run: echo ${{ steps.lastver.outputs.body }}
