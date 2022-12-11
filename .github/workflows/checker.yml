@@ -37,7 +37,7 @@ jobs:
       name: Update version in Dockerfile
       run: |
         sed -ri \
-            's/${{ env.VERSION_PATTERN }}/\1="${{ steps.lastver.outputs.value }}"/' \
+            "s/${{ env.VERSION_PATTERN }}/\1='${{ steps.lastver.outputs.value }}'/" \
             Dockerfile
     - run: cat Dockerfile
     - run: echo "${{ steps.curver.outputs.value }}"
