@@ -9,8 +9,7 @@ on:
       - scripts/main.js
 
 jobs:
-  job1:
-    name: Debug
+  setup:
     runs-on: ubuntu-latest
     env:
       VERSION_PATTERN: (ARG\s+S6_OVERLAY_VERSION)=(\"|')(.+)\2
@@ -33,6 +32,10 @@ jobs:
         script: |
           const script = require('./scripts/main.js')
           await script({github, core})
+  createPullRequest:
+    needs: setup
+    if: ${{ steps.lastver.outputs.value > steps.curver.outputs.value }}
+    steps:
     -
       name: Update version in Dockerfile
       run: |
