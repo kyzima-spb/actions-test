@@ -31,7 +31,12 @@ jobs:
         with:
           script: |
             const script = require('./scripts/main.js')
-            await script({github, core})
+            await script({
+              github,
+              core,
+              owner: 'just-containers',
+              repo: 's6-overlay',
+            })
       -
         name: Set update state
         id: update
