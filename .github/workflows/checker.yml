@@ -20,10 +20,10 @@ jobs:
       -
         name: Get current version
         id: curver
-        run: >
+        run:
           sed -nr "s/${{ env.VERSION_PATTERN }}/value=\3/p"
-              Dockerfile
-              >> $GITHUB_OUTPUT
+          Dockerfile
+          >> $GITHUB_OUTPUT
       -
         name: Get latest version
         id: lastver
