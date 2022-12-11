@@ -1,0 +1,27 @@
+name: Check and build new s6 version
+
+on:
+  # schedule:
+  #   - cron: '*/5 * * * *'
+  push:
+    branches:
+      - master
+
+jobs:
+  job1:
+    name: Debug
+    runs-on: ubuntu-latest
+
+    steps:
+    -
+      name: Git checkout
+      uses: actions/checkout@v3
+    -
+      id: checker
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const script = require('./scripts/main.js')
+          await script({github, core})
+    -
+      run: echo ${{ steps.checker.outputs.version }}
