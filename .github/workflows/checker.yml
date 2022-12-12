@@ -20,9 +20,10 @@ jobs:
       -
         name: Get current version
         id: curver
+        working-directory: ./docker
         run:
           sed -nr "s/${{ env.VERSION_PATTERN }}/value=\3/p"
-            docker/Dockerfile
+            Dockerfile
             >> $GITHUB_OUTPUT
       -
         name: Get latest version
@@ -46,6 +47,7 @@ jobs:
       -
         name: Update version in Dockerfile
         if: ${{ fromJSON(steps.update.outputs.state) }}
+        working-directory: ./docker
         run:
           sed -ri
             "s/${{ env.VERSION_PATTERN }}/\1=\2${{ steps.lastver.outputs.value }}\2/"
@@ -69,4 +71,3 @@ jobs:
           body: |
             ${{ steps.lastver.outputs.body }}
             ${{ steps.lastver.outputs.url }}
-
