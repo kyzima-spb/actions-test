@@ -2,7 +2,7 @@ name: Check and build new s6 version
 
 on:
   schedule:
-    - cron: '0 * * * *'
+    - cron: '45 5 * * *'
   push:
     paths:
       - .github/workflows/checker.yml
@@ -22,7 +22,7 @@ jobs:
         id: curver
         run:
           sed -nr "s/${{ env.VERSION_PATTERN }}/value=\3/p"
-            Dockerfile
+            docker/Dockerfile
             >> $GITHUB_OUTPUT
       -
         name: Get latest version
