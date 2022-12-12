@@ -69,3 +69,4 @@ jobs:
           body: |
             ${{ steps.lastver.outputs.body }}
             ${{ steps.lastver.outputs.url }}
+
