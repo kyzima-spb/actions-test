@@ -19,4 +19,4 @@ jobs:
     strategy:
       matrix: ${{ fromJSON(needs.load.outputs.matrix) }}
     steps:
-      - run: ${{ matrix.version }}
+      - run: echo "Current version: ${{ matrix.version }}"
