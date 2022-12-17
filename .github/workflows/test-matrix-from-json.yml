@@ -11,7 +11,7 @@ jobs:
       -
         name: Load JSON file
         id: set-matrix
-        run: echo "matrix=[{\"ok\": true}]" >> $GITHUB_OUTPUT
+        run: echo 'matrix=[{"ok": true}]' >> $GITHUB_OUTPUT
   job:
     needs: load
     runs-on: ubuntu-latest
