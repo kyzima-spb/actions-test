@@ -1,0 +1,23 @@
+name: Loading data for matrix from JSON file
+
+on:
+  push:
+    branch: master
+
+jobs:
+  load:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      -
+        name: Load JSON file
+        id: set-matrix
+        run: echo "matrix=[{\"ok\": true}]"
+  job:
+    needs: load
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.load.outputs.matrix) }}
+    steps:
+      - run: ${{ matrix.ok }}
