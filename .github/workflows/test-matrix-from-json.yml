@@ -3,24 +3,24 @@ name: Loading data for matrix from JSON file
 on: push
 
 jobs:
-  load:
+  setup:
     runs-on: ubuntu-latest
     outputs:
-      matrix: ${{ steps.set-matrix.outputs.matrix }}
+      matrix: ${{ steps.load.outputs.matrix }}
     steps:
       -
         name: Checkout
         uses: actions/checkout@v3
       -
         name: Load JSON file
-        id: set-matrix
+        id: load
         working-directory: ./.github/workflows
         run: echo "matrix=$(cat matrix.json)" >> $GITHUB_OUTPUT
   job:
-    needs: load
+    needs: setup
     runs-on: ubuntu-latest
     strategy:
-      matrix: ${{ fromJSON(needs.load.outputs.matrix) }}
+      matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
     steps:
       -
         run: echo ${{ matrix.version }}
