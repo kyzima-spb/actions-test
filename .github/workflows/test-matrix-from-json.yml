@@ -12,11 +12,11 @@ jobs:
         name: Load JSON file
         id: set-matrix
         run: |
-          echo 'matrix=[{"ok": true}]' >> $GITHUB_OUTPUT
+          echo 'matrix={"version": [1, 2, 3]}' >> $GITHUB_OUTPUT
   job:
     needs: load
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.load.outputs.matrix) }}
     steps:
-      - run: ${{ matrix.ok }}
+      - run: ${{ matrix.version }}
