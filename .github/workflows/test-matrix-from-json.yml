@@ -2,6 +2,9 @@ name: Loading data for matrix from JSON file
 
 on: push
 
+env:
+  IMAGE_NAME: "tixati"
+
 jobs:
   setup:
     runs-on: ubuntu-latest
@@ -23,4 +26,19 @@ jobs:
       matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
     steps:
       -
-        run: echo ${{ matrix.version }}
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/${{ env.IMAGE_NAME }}
+            ghcr.io/${{ github.repository_owner }}/${{ env.IMAGE_NAME }}
+          tags: |
+            ${{ matrix.version }}
+          # flavor: |
+          #   latest=${{ matrix.release == 'bullseye-slim' }}
+      -
+        run: echo ${{ steps.meta.outputs.tags }}
