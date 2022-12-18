@@ -21,6 +21,8 @@ jobs:
         run: echo "matrix=$(cat matrix.json)" | tr -d '\n' >> $GITHUB_OUTPUT
       -
         run: python -V
+      -
+        run: pip -V
   job:
     needs: setup
     runs-on: ubuntu-latest
@@ -41,6 +43,6 @@ jobs:
           tags: |
             ${{ matrix.version }}
           flavor: |
-            latest=${{ matrix.latest }}
+            latest=${{ !!matrix.latest }}
       -
         run: echo "${{ steps.meta.outputs.tags }}"
