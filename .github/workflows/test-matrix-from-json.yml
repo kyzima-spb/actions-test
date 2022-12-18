@@ -19,15 +19,13 @@ jobs:
         id: load
         working-directory: ./.github/workflows
         run: echo "matrix=$(cat matrix.json)" | tr -d '\n' >> $GITHUB_OUTPUT
-      -
-        run: python -V
-      -
-        run: pip -V
   job:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
+    -
+      run: echo ${{ toJSON(matrix) }}
     steps:
       -
         name: Checkout
@@ -45,4 +43,4 @@ jobs:
           flavor: |
             latest=${{ !!matrix.latest }}
       -
-        run: echo "${{ steps.meta.outputs.tags }}"
+        run: echo "${{ toJSON(steps.meta.outputs.tags) }}"
