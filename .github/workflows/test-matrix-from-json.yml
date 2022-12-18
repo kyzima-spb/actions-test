@@ -41,6 +41,4 @@ jobs:
           tags: |
             ${{ matrix.version }}
           flavor: |
-            latest=${{ !!matrix.latest }}
-      -
-        run: echo "${{ toJSON(steps.meta.outputs.tags) }}"
+            latest=${{ matrix.latest }}
