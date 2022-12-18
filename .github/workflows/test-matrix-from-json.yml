@@ -24,9 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
-    -
-      run: echo ${{ toJSON(matrix) }}
     steps:
+      -
+        run: echo ${{ toJSON(matrix) }}
       -
         name: Checkout
         uses: actions/checkout@v3
