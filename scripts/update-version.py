@@ -113,7 +113,7 @@ class Matrix:
 def main(argv: t.Sequence[str]) -> int:
     if len(argv) < 2:
         logger.info('The default location will be used for the matrix file.')
-        matrix_filename = ROOT_DIR / '.github/workflows/matrix.json'
+        matrix_filename = ROOT_DIR / '.github/matrix.json'
     else:
         matrix_filename = argv[1]
     
