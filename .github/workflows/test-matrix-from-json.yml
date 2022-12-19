@@ -26,8 +26,6 @@ jobs:
       matrix: ${{ fromJSON(needs.setup.outputs.matrix) }}
     steps:
       -
-        run: echo "${{ toJSON(matrix) }}"
-      -
         name: Checkout
         uses: actions/checkout@v3
       -
@@ -42,3 +40,11 @@ jobs:
             ${{ matrix.version }}
           flavor: |
             latest=${{ matrix.latest }}
+      -
+        name: Install dependencies
+        working-directory: ./scripts
+        run: pip install -r requirements.txt
+      -
+        name: Run checker
+        working-directory: ./scripts
+        run: python update-version.py
