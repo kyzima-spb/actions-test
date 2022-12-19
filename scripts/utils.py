@@ -8,7 +8,7 @@ def get_logger(name: str) -> logging.Logger:
     """Returns an instance of the logger."""
     handler = logging.StreamHandler()
     handler.setFormatter(logging.Formatter(
-        '[{levelname:^7}] {name}:{lineno} - {asctime}\n{message}',
+        '[{levelname:^7}] {name}:{lineno} ({asctime}) - {message}',
         datefmt='%Y-%m-%d %H:%M:%S',
         style='{',
     ))

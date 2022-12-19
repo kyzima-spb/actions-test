@@ -7,6 +7,7 @@ import pathlib
 import os
 import re
 import typing as t
+import sys
 
 from bs4 import BeautifulSoup
 
@@ -14,7 +15,6 @@ import utils
 
 
 ROOT_DIR = pathlib.Path(__file__).parents[1]
-WORKFLOW_DIR = ROOT_DIR / '.github/workflows'
 
 
 logger = utils.get_logger(__name__)
@@ -110,14 +110,20 @@ class Matrix:
             json.dump(self.matrix, f, indent=2)
 
 
-def main() -> int:
+def main(argv: t.Sequence[str]) -> int:
+    if len(argv) < 2:
+        logger.info('The default location will be used for the matrix file.')
+        matrix_filename = ROOT_DIR / '.github/workflows/matrix.json'
+    else:
+        matrix_filename = argv[1]
+    
     outputs = []
     
     latest_version = parse_latest_version()
     logger.info('The latest version of Tixati on the site: %s' % latest_version)
     outputs.append(('latest_version', latest_version))
     
-    matrix = Matrix(WORKFLOW_DIR / 'matrix.json')
+    matrix = Matrix(matrix_filename)
     
     build_version = matrix.latest_version
     logger.info('Latest version of Tixati to build: %s' % build_version)
@@ -127,10 +133,10 @@ def main() -> int:
         matrix.add_version(latest_version)
         matrix.save()
         update_dockerfile(latest_version)
-        outputs.append(('updated', True))
+        outputs.append(('updated', 'true'))
         logger.info('All files have been successfully edited')
     else:
-        outputs.append(('updated', False))
+        outputs.append(('updated', 'false'))
         logger.info('No update required')
     
     if 'GITHUB_OUTPUT' in os.environ:
@@ -142,4 +148,4 @@ def main() -> int:
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main(sys.argv))
