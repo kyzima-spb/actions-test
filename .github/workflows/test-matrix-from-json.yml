@@ -17,7 +17,7 @@ jobs:
       -
         name: Load JSON file
         id: load
-        working-directory: ./.github/workflows
+        working-directory: ./.github
         run: echo "matrix=$(cat matrix.json)" | tr -d '\n' >> $GITHUB_OUTPUT
   job:
     needs: setup
