@@ -3,9 +3,9 @@ name: Check the new version of Tixati and upgrade
 on:
   schedule:
     - cron: '45 6 * * *'
-  push:
-    paths:
-      - .github/workflows/checker.yml
+  push: master
+    # paths:
+    #   - .github/workflows/checker.yml
 
 jobs:
   check:
@@ -45,7 +45,6 @@ jobs:
           commit-message: ${{ env.MESSAGE }}
           labels: |
             automated pr
-
 
       
       # - name: Backup Tixati installers to FTP
