@@ -40,14 +40,3 @@ jobs:
             ${{ matrix.version }}
           flavor: |
             latest=${{ matrix.latest }}
-      -
-        name: Install dependencies
-        working-directory: ./scripts
-        run: pip install -r requirements.txt
-      -
-        name: Run checker
-        id: checker
-        working-directory: ./scripts
-        run: python update-version.py
-      -
-        run: echo "${{ toJSON(steps.checker.outputs) }}"
