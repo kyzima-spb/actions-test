@@ -10,11 +10,14 @@ on:
     #   - .github/workflows/checker.yml
 
 jobs:
-  check:
+  upgrade:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./scripts
+    outputs:
+      latest_version: ${{ steps.result.outputs.latest_version }}
+      updated: ${{ steps.result.outputs.updated }}
     steps:
       -
         name: Checkout
@@ -47,11 +50,28 @@ jobs:
           commit-message: ${{ env.MESSAGE }}
           labels: |
             automated pr
-
-      
-      # - name: Backup Tixati installers to FTP
-      #   if: ${{ steps.version.outputs.value }}
-      #   run: python backuper.py ${{ steps.version.outputs.value }}
+  backup:
+    needs: upgrade
+    if: ${{ fromJSON(needs.upgrade.outputs.updated) }}
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./scripts
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v3
+      -
+        name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      -
+        name: Install dependencies
+        run: pip install -r requirements.txt
+      -
+        name: Backup Tixati installers to FTP
+        run: python backuper.py ${{ needs.upgrade.outputs.latest_version }}
       #   env:
       #     FTP_HOST: ${{ secrets.FTP_HOST }}
       #     FTP_USER: ${{ secrets.FTP_USER }}
