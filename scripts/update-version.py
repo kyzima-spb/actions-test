@@ -127,6 +127,11 @@ def main() -> int:
         matrix.add_version(latest_version)
         matrix.save()
         update_dockerfile(latest_version)
+        outputs.append(('updated', True))
+        logger.info('All files have been successfully edited')
+    else:
+        outputs.append(('updated', False))
+        logger.info('No update required')
     
     if 'GITHUB_OUTPUT' in os.environ:
         with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
