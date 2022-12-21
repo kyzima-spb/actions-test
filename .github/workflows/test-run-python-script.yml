@@ -1,0 +1,15 @@
+name: Test the execution Python script
+
+on: push
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Execute inline script
+        run: |
+          import re
+          match = re.search(r'^\d+$', '123')
+          print(match)
+        shell: python
