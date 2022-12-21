@@ -2,6 +2,9 @@ name: Test the execution Python script
 
 on: push
 
+env:
+  VERSION_PATTERN: '^\d+$'
+
 jobs:
   execute:
     runs-on: ubuntu-latest
@@ -9,7 +12,9 @@ jobs:
       -
         name: Execute inline script
         run: |
+          import os
           import re
-          match = re.search(r'^\d+$', '123')
+          
+          match = re.search(os.environ['VERSION_PATTERN'], '123')
           print(match)
         shell: python
