@@ -9,7 +9,6 @@ jobs:
       matrix:
         os: ['linux']
         arch: ['amd64', 'arm']
-
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4
@@ -21,6 +20,11 @@ jobs:
           GOARCH: ${{ matrix.arch }}
         run: |
           go build \
+            -v \
             -o ./program/hello-${{ matrix.os }}-${{ matrix.arch }} \
             ./program/hello.go
-      - run: ./program/hello
+      - name: Commit and Push
+        run: |
+          git commit .
+          git push
+
