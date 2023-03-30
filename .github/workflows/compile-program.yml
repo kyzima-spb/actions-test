@@ -5,11 +5,20 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os: linux
+        arch: ['amd64', 'arm']
 
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4
         with:
           go-version: '1.20.2'
-      - run: go build -v -o ./program/hello ./program/hello.go
+      - run: |
+        GOOS=${{ matrix.os }} \
+        GOARCH=${{ matrix.arch }} \
+        go build \
+          -o ./program/hello-${{ matrix.os }}-${{ matrix.arch }} \
+          ./program/hello.go
       - run: ./program/hello
