@@ -27,5 +27,6 @@ jobs:
         run: |
           git config --global user.email "office@kyzima-spb.com"
           git config --global user.name "Kirill Vercetti"
-          git commit .
+          git add .
+          git commit -m "Update program"
           git push
