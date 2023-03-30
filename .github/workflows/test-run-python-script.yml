@@ -1,6 +1,9 @@
 name: Test the execution Python script
 
-on: push
+on:
+  push:
+    paths:
+      - .github/workflows/test-run-python-script.yml
 
 env:
   VERSION_PATTERN: '^\d+$'
