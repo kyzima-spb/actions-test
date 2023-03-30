@@ -9,6 +9,9 @@ jobs:
       matrix:
         os: ['linux']
         arch: ['amd64', 'arm']
+    defaults:
+      run:
+        working-directory: ./program
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-go@v4
@@ -21,12 +24,14 @@ jobs:
         run: |
           go build \
             -v \
-            -o ./program/hello-${{ matrix.os }}-${{ matrix.arch }} \
-            ./program/hello.go
-      - name: Commit and Push
+            -o ./hello-${{ matrix.os }}-${{ matrix.arch }} \
+            ./hello.go
+      - name: Commit
         run: |
-          git config --global user.email "office@kyzima-spb.com"
-          git config --global user.name "Kirill Vercetti"
-          git add .
+          git config --global user.email "noreply@github.com"
+          git config --local user.name "github-actions[bot]"
+          git add ./hello-${{ matrix.os }}-${{ matrix.arch }}
           git commit -m "Update program"
-          git push
+      -
+        name: Push changes
+        uses: ad-m/github-push-action@master
