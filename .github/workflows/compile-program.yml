@@ -11,7 +11,7 @@ jobs:
         arch: ['amd64', 'arm']
     defaults:
       run:
-        working-directory: ./program
+        working-directory: ./program/hello-github
     steps:
       - run: make
       # - uses: actions/checkout@v3
