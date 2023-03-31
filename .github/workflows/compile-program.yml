@@ -14,12 +14,14 @@ jobs:
         working-directory: ./program/hello-github
     steps:
       - uses: actions/checkout@v3
-      - name: Find changes
-        run: |
-          git diff --name-only HEAD^ HEAD \
-            | xargs -L1 dirname \
-            | uniq \
-            | while read p; do find $p -name Makefile; done
+      - run: git diff --name-only HEAD^ HEAD
+      # - name: Find changes
+      #   run: |
+      #     git diff --name-only HEAD^ HEAD \
+      #       | xargs -L1 dirname \
+      #       | uniq \
+      #       | while read p; do find "$p" -name Makefile; done
+      
       # - run: make
       # - uses: actions/setup-go@v4
       #   with:
