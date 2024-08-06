@@ -1,0 +1,26 @@
+name: Test
+
+on:
+  push:
+    branches:
+      - master
+      - dev-master
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "${{ toJSON(github) }}"
+      - run: echo ${{ toJSON(github.event_name == 'push' &&  github.ref_name == 'master') }}
+
+#      - name: Check if update available
+#        id: check
+#        uses: lucacome/docker-image-update-checker@v1
+#        with:
+#          base-image: library/debian:bookworm-slim
+#          image: kyzimaspb/gui:latest
+#      -
+#        name: Check result
+#        run:
+#          echo "Needs updating: ${{ steps.check.outputs.needs-updating }}"
