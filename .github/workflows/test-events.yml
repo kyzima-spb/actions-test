@@ -11,7 +11,7 @@ jobs:
   check:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "${{ github.event_name == 'pull_request' && toJSON(github.event.pull_request) }}"
+      - run: echo "${{ toJSON(github.event.pull_request) }}"
       - run: echo ${{ toJSON(github.event_name == 'push' &&  github.ref_name == 'master') }}
 
 #      - name: Check if update available
