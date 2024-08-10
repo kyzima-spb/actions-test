@@ -5,7 +5,7 @@ on:
     branches:
       - master
       - dev-master
-  pull_request:
+  pull_request_target:
 
 jobs:
   check:
@@ -13,6 +13,7 @@ jobs:
     steps:
       - run: echo "${{ toJSON(github.event.pull_request) }}"
       - run: echo ${{ toJSON(github.event_name == 'push' &&  github.ref_name == 'master') }}
+      - run: echo ${{ vars.IMAGE_NAME }}
 
 #      - name: Check if update available
 #        id: check
