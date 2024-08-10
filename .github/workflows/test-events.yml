@@ -14,7 +14,7 @@ jobs:
       - run: echo "${{ toJSON(github.event.pull_request) }}"
       - run: echo ${{ toJSON(github.event_name == 'push' &&  github.ref_name == 'master') }}
       - run: echo ${{ vars.IMAGE_NAME }}
-
+# test3
 #      - name: Check if update available
 #        id: check
 #        uses: lucacome/docker-image-update-checker@v1
