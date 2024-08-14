@@ -27,11 +27,20 @@ jobs:
         with:
           context: ./
           platforms: linux/amd64
+          tags: test:amd64
           load: true
+      -
+        name: Test amd64
+        run: docker run --rm test:amd64 uname -a
       -
         name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: ./
-          platforms: linux/arm/v7,linux/arm64
+          platforms: linux/arm/v7
+          tags: test:armv7
           load: true
+      -
+        name: Test arm/v7
+        run: docker run --rm test:armv7 uname -a
+        
