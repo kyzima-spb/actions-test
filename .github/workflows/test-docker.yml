@@ -42,5 +42,5 @@ jobs:
           load: true
       -
         name: Test arm/v7
-        run: docker run --rm test:armv7 uname -a
-        
+        run: docker run --rm --platform linux/arm/v7 test:armv7 uname -a
+
