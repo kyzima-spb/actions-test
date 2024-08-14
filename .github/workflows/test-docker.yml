@@ -1,0 +1,16 @@
+name: Test Docker
+
+on:
+  push:
+    
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Set up Buildx
+        id: buildx
+        uses: docker/setup-buildx@v3
+      -
+        run: echo "${{ toJSON(steps.buildx.outputs) }}"
+      
