@@ -1,0 +1,16 @@
+name: Regular base image update check
+
+on:
+  push:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker Image Update Checker
+        id: baseupdatecheck
+        uses: lucacome/docker-image-update-checker@v1.1.0
+        with:
+          base-image: library/debian:bookworm-slim
+          image: kyzimaspb/tixati
