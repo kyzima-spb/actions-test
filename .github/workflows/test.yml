@@ -11,6 +11,13 @@ jobs:
           - "bookworm-slim"
           - "bullseye-slim"
           - "buster-slim"
-    uses: ./.github/workflows/build.yml
-    with:
-      release: ${{ matrix.release }}
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: My first step - check out repository
+        uses: actions/checkout@v4
+      -
+        if: ${{ matrix.release != 'buster-slim' }}
+        uses: ./.github/actions/build-image
+        with:
+          release: ${{ matrix.release }}
