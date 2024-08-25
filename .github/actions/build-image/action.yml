@@ -1,0 +1,14 @@
+inputs:
+  release:
+    required: true
+    type: string
+
+runs:
+  using: composite
+  steps:
+    -
+      run: |
+        echo 'Build: ${{ inputs.release }}'
+    -
+      run: |
+        echo 'Deploy: ${{ inputs.release }}'
