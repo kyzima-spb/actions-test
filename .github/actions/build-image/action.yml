@@ -9,6 +9,8 @@ runs:
     -
       run: |
         echo 'Build: ${{ inputs.release }}'
+      shell: bash
     -
       run: |
         echo 'Deploy: ${{ inputs.release }}'
+      shell: bash
