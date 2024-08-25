@@ -11,4 +11,12 @@ jobs:
     steps:
       -
         run: |
-          echo 'Release: ${{ inputs.release }}'
+          echo 'Build: ${{ inputs.release }}'
+  
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      -
+        run: |
+          echo 'Deploy: ${{ inputs.release }}'
