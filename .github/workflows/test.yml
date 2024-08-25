@@ -5,6 +5,12 @@ on:
 
 jobs:
   test:
+    strategy:
+      matrix:
+        release:
+          - "bookworm-slim"
+          - "bullseye-slim"
+          - "buster-slim"
     uses: ./.github/workflows/build.yml
     with:
-      release: "bookworm-slim"
+      release: ${{ matrix.release }}
