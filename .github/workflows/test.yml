@@ -1,0 +1,13 @@
+name: Test
+
+on:
+  push
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        uses: ./.github/workflows/build.yml
+        with:
+          release: "bookworm-slim"
