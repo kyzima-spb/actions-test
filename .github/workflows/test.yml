@@ -5,11 +5,6 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      -
-        uses: actions/checkout@v4
-      -
-        uses: ./.github/workflows/build.yml
-        with:
-          release: "bookworm-slim"
+    uses: ./.github/workflows/build.yml
+    with:
+      release: "bookworm-slim"
